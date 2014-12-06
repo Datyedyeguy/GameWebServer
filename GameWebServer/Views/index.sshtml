@@ -2,19 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>GameWebServer</title>
-
+    <title>Datin's Playground</title>
 	<style type="text/css">
-
 		body {
-			text-align: center;
+			font-family: Verdana,Helvetica,"Helvetica Neue",Arial,sans-serif;
 		}
-
 	</style>
-
 </head>
 <body>
-	<img src="@Path['~/Content/nancy-logo.png']" alt="Nancy logo" /><br />
-	This view was rendered using the SuperSimpleViewEngine
+	<h1 id="welcome-to-datin-s-playground-">Welcome to Datin's Playground!</h1>
+	<p>New to the server?  Want steps to follow in order to join in on the fun?  Then look no further!</p>
+	<p>To connect to whatever game is currently running, just connect to game.datyedyeguy.net in either Hidden or Garry's Mod.</p>
+	<p>If you have any questions, email me at <a href="mailto:game@datyedyeguy.net">game@datyedyeguy.net</a></p>
+	<h2 id="how-to-setup-the-hidden-source">How to Setup The Hidden: Source</h2>
+	<ul>
+	<li>Install <a href="http://store.steampowered.com/about">Steam</a></li>
+	<li>Install <a href="http://store.steampowered.com/app/220/" title="Half-Life 2 on Steam">Half-Life 2</a></li>
+	<li>Download and install the <a href="http://www.hidden-source.com/downloads.htm">Hidden Client Installer</a></li>
+	</ul>
+	<p>Now you should have an entry in your Steam Library for "Hidden: Source Beta 4b".  If you do, then you are all good to go!  Just connect to game.datyedyeguy.net to get your game on!</p>
+	<p>I recommend playing through the tutorial to lean how the Hidden controls, along with reading through the <a href="http://www.hidden-source.com/downloads/manual.pdf">Manual</a> so that you aren't completely lost when you hop in.</p>
+	<h2 id="how-to-setup-garry-s-mod">How to Setup Garry's Mod</h2>
+	<ul>
+	<li>Install <a href="http://store.steampowered.com/about">Steam</a></li>
+	<li>Install <a href="http://store.steampowered.com/app/4000" title="Garry's Mod on Steam">Garry's Mod</a></li>
+	<li>Install <a href="http://store.steampowered.com/app/240/" title="Counter-Strike: Source on Steam">Counter-Strike: Source</a><ul>
+	<li>This is required due to maps on Garry's Mod using assets from Counter-Strike: Source.</li>
+	</ul>
+	</li>
+	<li>Subscribe to everything in <a href="http://steamcommunity.com/workshop/filedetails/?id=349910372">Datin's Playground Collection</a> on Steam.<ul>
+	<li>This will download any custom maps/sounds/etc when you next startup Garry's Mod</li>
+	</ul>
+	</li>
+	</ul>
+	<p>Now, when you start up Garry's Mod, you should be able to connect to game.datyedyeguy.net and get your game on!</p>
 </body>
 </html>
