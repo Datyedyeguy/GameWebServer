@@ -20,6 +20,12 @@
 	<li>Install <a href="http://store.steampowered.com/app/220/" title="Half-Life 2 on Steam">Half-Life 2</a></li>
 	<li>Install <a href="steam://install/215/" title="Source SDK Base 2006 on Steam">Source SDK Base 2006</a></li>
 	<li>Download and install the <a href="http://www.hidden-source.com/downloads.htm">Hidden Client Installer</a></li>
+	<li>Download the following maps and extract them in the following directories</li>
+	<ol>
+		<li><a href="http://hs.gamebanana.com/maps/download/16347">hdn_psychiatry</a> => %STEAM%\steamapps\sourcemods\hidden\maps</li>
+		<li><a href="http://hs.gamebanana.com/maps/download/16345">hdn_deadmeatb4b</a> => %STEAM%\steamapps\sourcemods\hidden</li>
+		<li><a href="http://hs.gamebanana.com/maps/download/14962">hdn_castle_b4</a> => %STEAM%\steamapps\sourcemods\hidden\maps</li>
+	</ol>
 	</ul>
 	<p>Now you should have an entry in your Steam Library for "Hidden: Source Beta 4b".  If you do, then you are all good to go!  Just connect to game.datyedyeguy.net to get your game on!</p>
 	<p>I recommend playing through the tutorial to lean how the Hidden controls, along with reading through the <a href="http://www.hidden-source.com/downloads/manual.pdf">Manual</a> so that you aren't completely lost when you hop in.</p>
