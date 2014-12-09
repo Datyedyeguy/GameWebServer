@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>GameWebServer</id>
+    <version>1.0.0</version>
+    <authors>Hans Brigman</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Web server to host information for my game server</description>
+  </metadata>
+  <files>
+    <file src="bin\**\*" target="" exclude="**\*vshost*"/>
+  </files>
+</package>
