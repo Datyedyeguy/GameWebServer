@@ -38,12 +38,14 @@
 	<ul>
 		<li>Install <a href="http://store.steampowered.com/about">Steam</a></li>
 		<li>Install <a href="http://store.steampowered.com/app/4000" title="Garry's Mod on Steam">Garry's Mod</a></li>
-		<li>Install <a href="http://store.steampowered.com/app/240/" title="Counter-Strike: Source on Steam">Counter-Strike: Source</a></il>
-		<li>This is required due to maps on Garry's Mod using assets from Counter-Strike: Source.</li>
-	</ul>
-	<ul>
+		<li>Install <a ref="http://store.steampowered.com/app/240/" title="Counter-Strike: Source on Steam">Counter-Strike: Source</a></il>
+		<ul>
+      <li>This is required due to maps on Garry's Mod using assets from Counter-Strike: Source.</li>
+    </ul>
 		<li>Subscribe to everything in <a href="http://steamcommunity.com/workshop/filedetails/?id=349910372">Datin's Playground Collection</a> on Steam.</li>
-		<li>This will download any custom maps/sounds/etc when you next startup Garry's Mod</li>
+		<ul>
+      <li>This will download any custom maps/sounds/etc when you next startup Garry's Mod</li>
+    </ul>
 	</ul>
 	<p>Now, when you start up Garry's Mod, you should be able to connect to game.datyedyeguy.net and get your game on!</p>
 </body>
