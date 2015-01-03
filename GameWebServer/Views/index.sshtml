@@ -8,12 +8,32 @@
 			background-color: white;
 			font-family: Verdana,Helvetica,"Helvetica Neue",Arial,sans-serif;
 		}
+
+		table {
+			border: 1px solid black;
+		}
+
+		td {
+			border: 1px solid black;
+		}
 	</style>
 </head>
 <body>
 	<h1 id="welcome-to-datin-s-playground-">Welcome to Datin's Playground!</h1>
-	<p>New to the server?  Want steps to follow in order to join in on the fun?  Then look no further!</p>
-	<p>To connect to whatever game is currently running, just connect to game.datyedyeguy.net in either Hidden or Garry's Mod.</p>
+	<table>
+		<tr>
+	@Each.ServerDatas
+		<td>
+			Name: @Current.Description<br />
+			Port: @Current.Address<br />
+			Map: @Current.Map<br />
+			Players: @Current.Players / @Current.MaxPlayers
+		</td>
+	@EndEach
+		</tr>
+	</table>
+	<p>New to the servers?  Want steps to follow in order to join in on the fun?  Then look no further!</p>
+	<p>To connect to whatever game is currently running, just connect to game.datyedyeguy.net with the correct port as listed above.</p>
 	<p>If you have any questions, email me at <a href="mailto:game@datyedyeguy.net">game@datyedyeguy.net</a></p>
 	<h2 id="how-to-join-mumble">How to join Mumble</h2>
 	<ul>
