@@ -18,9 +18,9 @@ namespace GameWebServer
 
         public IndexModule()
         {
-            _gmodServer = ServerQuery.GetServerInstance(EngineType.Source, GetIPEndPointFromHostName("game.datyedyeguy.net", 27015, true));
-            _hiddenServer = ServerQuery.GetServerInstance(Game.Half_Life_2_Deathmatch, GetIPEndPointFromHostName("game.datyedyeguy.net", 27020, true));
-            _insurgencyServer = ServerQuery.GetServerInstance(EngineType.Source, GetIPEndPointFromHostName("game.datyedyeguy.net", 27025, true));
+            _gmodServer = ServerQuery.GetServerInstance(EngineType.Source, "127.0.0.1", 27015);
+            _hiddenServer = ServerQuery.GetServerInstance(Game.Half_Life_2_Deathmatch, "127.0.0.1", 27020);
+            _insurgencyServer = ServerQuery.GetServerInstance(EngineType.Source, "127.0.0.1", 27025);
 
             var localIpAddress = Dns.GetHostAddresses("game.datyedyeguy.net")[0].ToString();
 
@@ -34,26 +34,6 @@ namespace GameWebServer
 
                 return View["index", new ServerInfoModel(infos, localIpAddress)];
             };
-        }
-
-        private IPEndPoint GetIPEndPointFromHostName(string hostName, int port, bool throwIfMoreThanOneIP)
-        {
-            var addresses = Dns.GetHostAddresses(hostName);
-            if (addresses.Length == 0)
-            {
-                throw new ArgumentException(
-                    "Unable to retrieve address from specified host name.",
-                    "hostName"
-                );
-            }
-            else if (throwIfMoreThanOneIP && addresses.Length > 1)
-            {
-                throw new ArgumentException(
-                    "There is more that one IP address to the specified host.",
-                    "hostName"
-                );
-            }
-            return new IPEndPoint(addresses[0], port); // Port gets validated here.
         }
     }
 }
