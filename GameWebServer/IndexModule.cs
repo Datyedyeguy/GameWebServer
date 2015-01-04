@@ -28,29 +28,35 @@ namespace GameWebServer
             _hiddenServer = new SourceServerQuery("127.0.0.1", 27020);
             _insurgencyServer = new SourceServerQuery("127.0.0.1", 27025);
             _localIpAddress = Dns.GetHostAddresses("game.datyedyeguy.net")[0].ToString();
-            _serverDatas = new List<ServerData>(3);
-            _timers = new List<Timer>();
 
-            var timer = new Timer();
-            timer.Interval = 5000;
-            timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _gmodServer, Port = 27015, DataIndex = 0 }); };
-            timer.Start();
-            _timers.Add(timer);
-            _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+            lock(_lockServerDataObject)
+            {
+                _serverDatas = new List<ServerData>(3);
+                _timers = new List<Timer>();
 
-            timer = new Timer();
-            timer.Interval = 5000;
-            timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _hiddenServer, Port = 27020, DataIndex = 1 }); };
-            timer.Start();
-            _timers.Add(timer);
-            _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+                var timer = new Timer();
+                timer.Interval = 5000;
+                timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _gmodServer, Port = 27015, DataIndex = 0 }); };
+                _timers.Add(timer);
+                _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
 
-            timer = new Timer();
-            timer.Interval = 5000;
-            timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _insurgencyServer, Port = 27025, DataIndex = 2 }); };
-            timer.Start();
-            _timers.Add(timer);
-            _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+                timer = new Timer();
+                timer.Interval = 5000;
+                timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _hiddenServer, Port = 27020, DataIndex = 1 }); };
+                _timers.Add(timer);
+                _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+
+                timer = new Timer();
+                timer.Interval = 5000;
+                timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _insurgencyServer, Port = 27025, DataIndex = 2 }); };
+                _timers.Add(timer);
+                _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+            }
+
+            foreach (var timer in _timers)
+            {
+                timer.Start();
+            }
         }
 
         public IndexModule()
