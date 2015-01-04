@@ -2,33 +2,82 @@
 
 using GameWebServer.Models;
 
+using SteamMasterServer.Lib;
+
+using System;
 using System.Net;
 using System.Collections.Generic;
-using System;
-
-using SteamMasterServer.Lib;
+using System.Timers;
 
 namespace GameWebServer
 {
     public class IndexModule : NancyModule
     {
+        private static Object _lockServerDataObject = new Object();
+        private static IList<ServerData> _serverDatas;
+
+        private static string _localIpAddress;
+        private static SourceServerQuery _gmodServer;
+        private static SourceServerQuery _hiddenServer;
+        private static SourceServerQuery _insurgencyServer;
+        private static IList<Timer> _timers;
+
+        static IndexModule()
+        {
+            _gmodServer = new SourceServerQuery("10.0.0.2", 27015);
+            _hiddenServer = new SourceServerQuery("10.0.0.2", 27020);
+            _insurgencyServer = new SourceServerQuery("10.0.0.2", 27025);
+            _localIpAddress = Dns.GetHostAddresses("game.datyedyeguy.net")[0].ToString();
+            _serverDatas = new List<ServerData>(3);
+            _timers = new List<Timer>();
+
+            var timer = new Timer();
+            timer.Interval = 5000;
+            timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _gmodServer, Port = 27015, DataIndex = 0 }); };
+            timer.Start();
+            _timers.Add(timer);
+            _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+
+            timer = new Timer();
+            timer.Interval = 5000;
+            timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _hiddenServer, Port = 27020, DataIndex = 1 }); };
+            timer.Start();
+            _timers.Add(timer);
+            _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+
+            timer = new Timer();
+            timer.Interval = 5000;
+            timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _insurgencyServer, Port = 27025, DataIndex = 2 }); };
+            timer.Start();
+            _timers.Add(timer);
+            _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+        }
+
         public IndexModule()
         {
-            var gmodServer = new SourceServerQuery("127.0.0.1", 27015);
-            var hiddenServer = new SourceServerQuery("127.0.0.1", 27020);
-            var insurgencyServer = new SourceServerQuery("127.0.0.1", 27025);
-            var localIpAddress = Dns.GetHostAddresses("game.datyedyeguy.net")[0].ToString();
-
             Get["/"] = parameters =>
             {
-                IList<ServerData> datas = new List<ServerData>();
-
-                datas.Add(new ServerData(gmodServer.GetServerInformation(), localIpAddress, 27015));
-                datas.Add(new ServerData(hiddenServer.GetServerInformation(), localIpAddress, 27020));
-                datas.Add(new ServerData(insurgencyServer.GetServerInformation(), localIpAddress, 27025));
-
-                return View["index", new ServerInfoModel(datas)];
+                lock (_lockServerDataObject)
+                {
+                    return View["index", new ServerInfoModel(_serverDatas)];
+                }
             };
+        }
+
+        private static void UpdateServerData(dynamic info)
+        {
+            SourceServerQuery sourceServerQuery = info.SourceServerQuery;
+            int port = info.Port;
+            int dataIndex = info.DataIndex;
+            var serverInfo = sourceServerQuery.GetServerInformation();
+
+            if (serverInfo.name.Contains("N/A") == false)
+            {
+                lock (_lockServerDataObject)
+                {
+                    _serverDatas[dataIndex] = new ServerData(serverInfo, _localIpAddress, port);
+                }
+            }
         }
     }
 }

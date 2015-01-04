@@ -20,8 +20,8 @@ namespace SteamMasterServer.Lib
         private UdpClient client;
 
         // send & receive timeouts
-        private int send_timeout = 2500;
-        private int receive_timeout = 2500;
+        private int send_timeout = 10000;
+        private int receive_timeout = 10000;
 
         // raw response returned from the server
         private byte[] raw_data;
