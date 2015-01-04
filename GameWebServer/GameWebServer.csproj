@@ -36,8 +36,8 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ionic.BZip2">
-      <HintPath>..\lib\QueryMaster\Ionic.BZip2.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Nancy, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -46,9 +46,6 @@
     <Reference Include="Nancy.Hosting.Self, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.Hosting.Self.0.21.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
-    </Reference>
-    <Reference Include="QueryMaster">
-      <HintPath>..\lib\QueryMaster\QueryMaster.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +63,10 @@
     <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SourceServerQuery\PlayersResponse.cs" />
+    <Compile Include="SourceServerQuery\RulesResponse.cs" />
+    <Compile Include="SourceServerQuery\ServerInfoResponse.cs" />
+    <Compile Include="SourceServerQuery\SourceServerQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
