@@ -338,14 +338,7 @@ namespace SteamMasterServer.Lib
         /// <param name="port">The Server Port</param>
         public void SetAddress(String ip, int port)
         {
-            if (ip.Equals("127.0.0.1"))
-            {
-                this.remote = new IPEndPoint(IPAddress.Loopback, port);
-            }
-            else
-            {
-                this.remote = new IPEndPoint(IPAddress.Parse(ip), port);
-            }
+            this.remote = new IPEndPoint(IPAddress.Parse(ip), port);
 
             if (this.socket != null)
             {
@@ -388,7 +381,7 @@ namespace SteamMasterServer.Lib
                             AddressFamily.InterNetwork,
                             SocketType.Dgram,
                             ProtocolType.Udp);
-                
+
                 this.socket.SendTimeout = this.send_timeout;
                 this.socket.ReceiveTimeout = this.receive_timeout;
 

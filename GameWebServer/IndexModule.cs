@@ -24,9 +24,9 @@ namespace GameWebServer
 
         static IndexModule()
         {
-            _gmodServer = new SourceServerQuery("127.0.0.1", 27015);
-            _hiddenServer = new SourceServerQuery("127.0.0.1", 27020);
-            _insurgencyServer = new SourceServerQuery("127.0.0.1", 27025);
+            _gmodServer = new SourceServerQuery("10.0.0.2", 27015);
+            _hiddenServer = new SourceServerQuery("10.0.0.2", 27020);
+            _insurgencyServer = new SourceServerQuery("10.0.0.2", 27025);
             _localIpAddress = Dns.GetHostAddresses("game.datyedyeguy.net")[0].ToString();
 
             lock(_lockServerDataObject)
