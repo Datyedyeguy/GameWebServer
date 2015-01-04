@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceProcess;
 
+using Nancy;
 using Nancy.Hosting.Self;
 
 namespace GameWebServer
@@ -14,6 +15,8 @@ namespace GameWebServer
 
         public Service() 
         {
+            StaticConfiguration.DisableErrorTraces = true;
+
             var uri = new Uri("http://localhost:80");
             _nancyHost = new NancyHost(uri);
         }
