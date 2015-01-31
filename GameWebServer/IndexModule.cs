@@ -8,6 +8,7 @@ using System;
 using System.Net;
 using System.Collections.Generic;
 using System.Timers;
+using System.Linq;
 
 namespace GameWebServer
 {
@@ -17,40 +18,28 @@ namespace GameWebServer
         private static IList<ServerData> _serverDatas;
 
         private static string _localIpAddress;
-        private static SourceServerQuery _gmodServer;
-        private static SourceServerQuery _hiddenServer;
-        private static SourceServerQuery _insurgencyServer;
+        private static IDictionary<int, SourceServerQuery> _servers = new Dictionary<int, SourceServerQuery>();
         private static IList<Timer> _timers;
 
         static IndexModule()
         {
-            _gmodServer = new SourceServerQuery("10.0.0.2", 27015);
-            _hiddenServer = new SourceServerQuery("10.0.0.2", 27020);
-            _insurgencyServer = new SourceServerQuery("10.0.0.2", 27025);
             _localIpAddress = Dns.GetHostAddresses("game.datyedyeguy.net")[0].ToString();
 
             lock(_lockServerDataObject)
             {
-                _serverDatas = new List<ServerData>(3);
+                _serverDatas = new List<ServerData>();
                 _timers = new List<Timer>();
 
-                var timer = new Timer();
-                timer.Interval = 5000;
-                timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _gmodServer, Port = 27015, DataIndex = 0 }); };
-                _timers.Add(timer);
-                _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
-
-                timer = new Timer();
-                timer.Interval = 5000;
-                timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _hiddenServer, Port = 27020, DataIndex = 1 }); };
-                _timers.Add(timer);
-                _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
-
-                timer = new Timer();
-                timer.Interval = 5000;
-                timer.Elapsed += delegate { UpdateServerData(new { SourceServerQuery = _insurgencyServer, Port = 27025, DataIndex = 2 }); };
-                _timers.Add(timer);
-                _serverDatas.Add(new ServerData(new ServerInfoResponse(), null, 0));
+                for (int i = 27015; i <= 27030; i++)
+                {
+                    int port = i;
+                    int dataIndex = _serverDatas.Count;
+                    var timer = new Timer();
+                    timer.Interval = 30000;
+                    timer.Elapsed += delegate { UpdateServerData(new { Port = port, DataIndex = dataIndex }); };
+                    _timers.Add(timer);
+                    _serverDatas.Add(null);
+                }
             }
 
             foreach (var timer in _timers)
@@ -63,25 +52,43 @@ namespace GameWebServer
         {
             Get["/"] = parameters =>
             {
+                IList<ServerData> validInfo = null;
+
                 lock (_lockServerDataObject)
                 {
-                    return View["index", new ServerInfoModel(_serverDatas)];
+                    validInfo = _serverDatas.Where(x => x != null).ToList();
                 }
+
+                return View["index", new ServerInfoModel(validInfo)];
             };
         }
 
         private static void UpdateServerData(dynamic info)
         {
-            SourceServerQuery sourceServerQuery = info.SourceServerQuery;
             int port = info.Port;
             int dataIndex = info.DataIndex;
-            var serverInfo = sourceServerQuery.GetServerInformation();
 
-            if (serverInfo.name.Contains("N/A") == false)
+            if (_servers.ContainsKey(port) == false)
             {
                 lock (_lockServerDataObject)
                 {
+                    _servers[port] = new SourceServerQuery("10.0.0.2", port);
+                }
+            }
+
+            SourceServerQuery sourceServerQuery = _servers[port];
+            var serverInfo = sourceServerQuery.GetServerInformation();
+
+            lock (_lockServerDataObject)
+            {
+                if (serverInfo.name.Contains("N/A") == false)
+                {
                     _serverDatas[dataIndex] = new ServerData(serverInfo, _localIpAddress, port);
+                }
+                else
+                {
+                    _serverDatas[dataIndex] = null;
+                    _servers.Remove(port);
                 }
             }
         }
