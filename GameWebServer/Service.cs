@@ -17,7 +17,7 @@ namespace GameWebServer
         {
             StaticConfiguration.DisableErrorTraces = false;
 
-            var uri = new Uri("http://localhost:80");
+            var uri = new Uri("http://localhost:1337");
             _nancyHost = new NancyHost(uri);
         }
 
